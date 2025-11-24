@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <climits>
+#include <algorithm>
 using namespace std;
 
 const int SIZE = 12; 
@@ -151,6 +152,29 @@ public:
         }
     }
     return dist;
+    }
+
+    void kruskalsMST(int V, const vector<Edge>& ed ) {
+        vector<vector<int>> e;
+        for (auto &edge : ed) {
+            e.push_back({edge.src, edge.dest, edge.weight});
+        }
+        sort(e.begin(), e.end(), [](vector<int>& a, vector<int>& b){ return a.at(2) < b.at(2); });
+
+        DSU dsu(V);
+        int cost = 0, count = 0;
+
+        cout << "\nMinimum Spanning Tree edges:" << endl;
+        for (auto &edge : e) {
+            int x = edge.at(0), y = edge.at(1), w = edge.at(2);
+            if (dsu.find(x) != dsu.find(y)) {
+                dsu.unite(x, y);
+                cost += w;
+                cout << "Edge from " << x << " to " << y << " with capacity: " << w << " units" << endl;
+                if (++count == V - 1) break;
+            }
+        }
+        cout << "Total MST cost: " << cost << " units" << endl;
     }
     
 };
