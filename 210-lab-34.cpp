@@ -87,6 +87,11 @@ int main(){
 
     g.printGraph();
 
+    vector<int> order = g.bfs(0);
+    cout << "BFS starting from vertex 0:" << endl;
+    for (int v : order) cout << v << " ";
+    cout << endl;
+
 
 
     return 1;
