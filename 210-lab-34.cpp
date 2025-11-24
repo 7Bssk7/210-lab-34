@@ -24,8 +24,8 @@ public:
             int src = edge.src;
             int dest = edge.dest;
             int weight = edge.weight;
-            adjList[src].push_back(make_pair(dest, weight));
-            adjList[dest].push_back(make_pair(src, weight));
+            adjList.at(src).push_back(make_pair(dest, weight));
+            adjList.at(dest).push_back(make_pair(src, weight));
         }
     }
     void printGraph(const vector<string>& cityNames) {
@@ -33,7 +33,7 @@ public:
         cout << "=====================================" << endl;
         for (int i = 0; i < adjList.size(); i++) {
             cout << "City " << i << " - " << cityNames.at(i) << ":" << endl;
-            for (Pair v: adjList[i])
+            for (Pair v: adjList.at(i))
             cout << "   -> City " << i+1 << ": " << cityNames.at(v.first) << ", Distance: " << v.second << " miles" << endl;
         }
     }
@@ -45,7 +45,7 @@ public:
     
         queue<int> q;
     
-        visited[src] = true;
+        visited.at(src) = true;
         q.push(src);
 
         cout << "\nLayer-by-Layer West Coast Transportation Expansion (BFS) from City "<< src << " (" << cN.at(src) << "):" << endl;
@@ -63,10 +63,10 @@ public:
                 int c = 1;
                 int next = x.first;
                 int dist = x.second;
-                if (!visited[next]) {
-                    visited[next] = true;
+                if (!visited.at(next)) {
+                    visited.at(next) = true;
                     q.push(next);
-                    cout << "  -> Next stop: City " << next << " (" << cN[next] << ") - Distance: " << dist << " miles" << endl;
+                    cout << "  -> Next stop: City " << next << " (" << cN.at(next) << ") - Distance: " << dist << " miles" << endl;
                 }
             }
         }
@@ -75,22 +75,28 @@ public:
     }
 
 
-    void dfsRec(vector<bool> &visited, int s, vector<int> &res) {
-        visited[s] = true;
+    void dfsRec(vector<bool> &visited, int s, vector<int> &res, const vector<string>& cN) {
+        visited.at(s) = true;
         res.push_back(s);
 
-        for (auto &i : adjList[s]) {
+        for (auto &i : adjList.at(s)) {
+            int dist = i.second;
             int next = i.first;
-            if (!visited[next]) {
-                dfsRec(visited, next, res);
+            if (!visited.at(next)) {
+                cout << "Departing from City " << s << " (" << cN.at(s) << ")" << endl;
+                cout << " -> Travel route to City " << next << " (" << cN.at(next) << ") - Distance: " << dist << " miles" << endl;
+                dfsRec(visited, next, res, cN);
             }
-        }
+        }    
     }
 
-     vector<int> dfs(int src) {
+     vector<int> dfs(int src, const vector<string>& cN) {
         vector<bool> visited(adjList.size(), false);
         vector<int> res;
-        dfsRec(visited, src, res);
+        cout << "\nTravel Route Trace (DFS) from City " << src << " (" << cN.at(src) << "):" << endl;
+        cout << "Purpose: Exploring possible travel itineraries through the West Coast transportation network" << endl;
+        cout << "=================================================" << endl;
+        dfsRec(visited, src, res, cN);
         return res;
     }
     
@@ -107,7 +113,6 @@ int main(){
         {3, 5, 270},   // LA -> LS
         {4, 6, 355},   // SD -> PHX
         {6, 7, 115},   // PHX -> TUS
-        {6, 5, 300},   // PHX -> LS
         {5, 10, 420},  // LS -> SLC
         {10, 11, 520}  // SLC -> DEN
     };
@@ -119,10 +124,7 @@ int main(){
 
     g.printGraph(cNames);
 
-    vector<int> dsf_order = g.dfs(0);
-    cout << "DFS starting from vertex 0:" << endl;
-    for (int v : dsf_order) cout << v << " ";
-    cout << endl;
+    g.dfs(0, cNames);
 
     g.bfs(0, cNames);
 
