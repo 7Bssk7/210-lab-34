@@ -1,3 +1,5 @@
+// COMSC-210 | Lab 34 | Arkhip Finski
+// IDE used: Visual Studio
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -5,17 +7,21 @@
 #include <algorithm>
 using namespace std;
 
-const int SIZE = 12; 
+const int SIZE = 12; // constant for number of cities (graph size)
 
+// Edge structure:
 struct Edge {
     int src, dest, weight;
 };
 
 typedef pair<int, int> Pair;  
 
+// Disjoint Set Union (DSU) 
+// DSU is used in Kruskal's algorithm to detect cycles
 class DSU {
     vector<int> parent, rank;
 public:
+    // constructor initializes each node as its own parent
     DSU(int n) {
         parent.resize(n);
         rank.resize(n);
@@ -24,9 +30,11 @@ public:
             rank.at(i) = 1;
         }
     }
+    // find() returns representative of a set (with path compression)
     int find(int i) {
         return (parent.at(i) == i) ? i : (parent.at(i) = find(parent.at(i)));
     }
+    // unite() merges two sets by rank
     void unite(int x, int y) {
         int s1 = find(x), s2 = find(y);
         if (s1 != s2) {
