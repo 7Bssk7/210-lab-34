@@ -101,6 +101,12 @@ public:
     }
 
     vector<int> dijkstra(int src) {
+        int V = adjList.size();
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        vector<int> dist(V, INT_MAX);
+
+        dist[src] = 0;
+        pq.emplace(0, src);
     }
     
 };
