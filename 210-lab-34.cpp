@@ -29,7 +29,9 @@ public:
         }
     }
     void printGraph() {
+        cout << "Graph's adjacency list:" << endl;
         for (int i = 0; i < adjList.size(); i++) {
+            cout << i << " ---> ";
             for (Pair v: adjList[i])
                 cout << "(" << i << ", " << v.first << ", " << v.second << ") ";
             cout << endl;
@@ -80,6 +82,12 @@ int main(){
         {5, 10, 420},  // LS -> SLC
         {10, 11, 520}  // SLC -> DEN
     };
+
+    Graph g(edges);
+
+    g.printGraph();
+
+
 
     return 1;
 
