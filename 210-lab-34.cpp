@@ -182,6 +182,7 @@ public:
 void menu();
 
 int main(){
+    int choice;
     vector<Edge> edges = {
         {0, 1, 50},    // SF -> SJ
         {0, 2, 90},    // SF -> SAC
@@ -201,37 +202,58 @@ int main(){
 
     Graph g(edges);
 
-    g.printGraph(cNames);
-
-    g.dfs(0, cNames);
-
-    g.bfs(0, cNames);
-
-    vector<int> dist = g.dijkstra(0); 
-    cout << "\nShortest path from node 0:" << " (" << cNames.at(0) << ")" << endl;
-    for (int i = 0; i < dist.size(); i++) {
-        cout << "0 -> " << i << " : ";
-        if (dist.at(i) == INT_MAX){
-            cout << "unreachable" << endl;
+    menu();
+    cin >> choice;
+    while(choice!= 0){
+        if((choice < 0) || (choice > 5)){
+            cout << "\nInvalid choice, please enter your choice again!" << endl;
+            menu();
+            cin >> choice;
         }
         else{
-            cout << dist.at(i) << endl;
-        } 
+            if(choice == 1){
+                g.printGraph(cNames);
+            }
+            else if(choice == 2){
+                g.dfs(0, cNames);
+            }
+            else if(choice == 3){
+                g.bfs(0, cNames);
+            }
+            else if(choice == 4){
+                vector<int> dist = g.dijkstra(0); 
+                cout << "\nShortest path from node 0:" << " (" << cNames.at(0) << ")" << endl;
+                for (int i = 0; i < dist.size(); i++) {
+                    cout << "0 -> " << i << " : ";
+                    if (dist.at(i) == INT_MAX){
+                        cout << "unreachable" << endl;
+                    }
+                    else{
+                        cout << dist.at(i) << endl;
+                    } 
+                }
+            }
+            else if(choice == 5){
+                g.kruskalsMST(SIZE, edges);
+            }
+
+            menu();
+
+            cin >> choice;
+
+        }
+
+
     }
 
-    g.kruskalsMST(SIZE, edges);
-
-
-
-
-
+    cout << "\nBye" << endl;
 
     return 1;
 
 }
 
 void menu(){
-    cout << "West Coast Transportation Network Menu:" << endl;
+    cout << "\nWest Coast Transportation Network Menu:" << endl;
     cout << "[1] Display transportation network" << endl;
     cout << "[2] Explore reachable cities (BFS)" << endl;
     cout << "[3] Trace travel routes (DFS)" << endl;
