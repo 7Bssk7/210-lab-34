@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <climits>
 using namespace std;
 
 const int SIZE = 12; 
@@ -107,6 +108,25 @@ public:
 
         dist[src] = 0;
         pq.emplace(0, src);
+
+        while (!pq.empty()) {
+        auto top = pq.top();
+        pq.pop();
+        int d = top.first;
+        int u = top.second;
+
+        if (d > dist.at(u)) continue;
+
+        for (auto &p : adjList.at(u)) {
+            int v = p.first;
+            int w = p.second;
+            if (dist.at(u) + w < dist.at(v)) {
+                dist.at(v) = dist.at(u) + w;
+                pq.emplace(dist.at(v), v);
+            }
+        }
+    }
+    return dist;
     }
     
 };
@@ -136,6 +156,18 @@ int main(){
     g.dfs(0, cNames);
 
     g.bfs(0, cNames);
+
+    vector<int> dist = g.dijkstra(0); 
+    cout << "\nShortest path from node 0:" << " (" << cNames.at(0) << ")" << endl;
+    for (int i = 0; i < dist.size(); i++) {
+        cout << "0 -> " << i << " : ";
+        if (dist.at(i) == INT_MAX){
+            cout << "unreachable" << endl;
+        }
+        else{
+            cout << dist.at(i) << endl;
+        } 
+    }
 
 
 
