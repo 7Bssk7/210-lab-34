@@ -217,6 +217,8 @@ int main(){
         } 
     }
 
+    g.kruskalsMST(SIZE, edges);
+
 
 
 
