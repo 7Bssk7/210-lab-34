@@ -28,7 +28,7 @@ public:
             adjList[dest].push_back(make_pair(src, weight));
         }
     }
-    void printGraph(const vector<string> cityNames) {
+    void printGraph(const vector<string>& cityNames) {
         cout << "WEST COAST TRANSPORTATION:" << endl;
         cout << "=====================================" << endl;
         for (int i = 0; i < adjList.size(); i++) {
@@ -38,7 +38,7 @@ public:
         }
     }
 
-    vector<int> bfs(int src) {
+    vector<int> bfs(int src, const vector<string>& cN) {
         int V = adjList.size();
         vector<bool> visited(V, false);
         vector<int> res;
@@ -48,16 +48,25 @@ public:
         visited[src] = true;
         q.push(src);
 
+        cout << "\nLayer-by-Layer West Coast Transportation Expansion (BFS) from City "<< src << " (" << cN.at(src) << "):" << endl;
+        cout << "Purpose: Analyzing reachable cities by distance from " << cN.at(src) << endl;
+        cout << "=================================================" << endl;
+
         while (!q.empty()) {
             int curr = q.front();
             q.pop();
             res.push_back(curr);
 
-            for (auto &x : adjList[curr]) {
+            cout << "Departing from City " << curr << " (" << cN.at(curr) << "): " << endl;
+
+            for (auto &x : adjList.at(curr)) {
+                int c = 1;
                 int next = x.first;
+                int dist = x.second;
                 if (!visited[next]) {
                     visited[next] = true;
                     q.push(next);
+                    cout << "  -> Next stop: City " << next << " (" << cN[next] << ") - Distance: " << dist << " miles" << endl;
                 }
             }
         }
@@ -115,10 +124,7 @@ int main(){
     for (int v : dsf_order) cout << v << " ";
     cout << endl;
 
-    vector<int> bsf_order = g.bfs(0);
-    cout << "BFS starting from vertex 0:" << endl;
-    for (int v : bsf_order) cout << v << " ";
-    cout << endl;
+    g.bfs(0, cNames);
 
 
 
