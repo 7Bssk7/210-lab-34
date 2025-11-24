@@ -3,7 +3,7 @@
 #include <queue>
 using namespace std;
 
-const int SIZE = 7; 
+const int SIZE = 12; 
 
 struct Edge {
     int src, dest, weight;
@@ -89,15 +89,18 @@ public:
 
 int main(){
     vector<Edge> edges = {
-        {0, 1, 12}, 
-        {0, 2, 8}, 
-        {0, 3, 21},
-        {2, 3, 6}, 
-        {2, 6, 2}, 
-        {2, 5, 5}, 
-        {2, 4, 4},
-        {5, 6, 6}, 
-        {5, 4, 9}
+        {0, 1, 50},    // SF -> SJ
+        {0, 2, 90},    // SF -> SAC
+        {2, 9, 580},   // SAC -> PDX
+        {9, 8, 170},   // PDX -> SEA
+        {1, 3, 340},   // SJ -> LA
+        {3, 4, 120},   // LA -> SD
+        {3, 5, 270},   // LA -> LS
+        {4, 6, 355},   // SD -> PHX
+        {6, 7, 115},   // PHX -> TUS
+        {6, 5, 300},   // PHX -> LS
+        {5, 10, 420},  // LS -> SLC
+        {10, 11, 520}  // SLC -> DEN
     };
 
     Graph g(edges);
