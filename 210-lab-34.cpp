@@ -110,15 +110,16 @@ int main(){
 
     g.printGraph(cNames);
 
+    vector<int> dsf_order = g.dfs(0);
+    cout << "DFS starting from vertex 0:" << endl;
+    for (int v : dsf_order) cout << v << " ";
+    cout << endl;
+
     vector<int> bsf_order = g.bfs(0);
     cout << "BFS starting from vertex 0:" << endl;
     for (int v : bsf_order) cout << v << " ";
     cout << endl;
 
-    vector<int> dsf_order = g.dfs(0);
-    cout << "DFS starting from vertex 0:" << endl;
-    for (int v : dsf_order) cout << v << " ";
-    cout << endl;
 
 
 
