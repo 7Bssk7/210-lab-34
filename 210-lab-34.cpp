@@ -64,6 +64,26 @@ public:
     
     return res;
     }
+
+
+    void dfsRec(vector<bool> &visited, int s, vector<int> &res) {
+        visited[s] = true;
+        res.push_back(s);
+
+        for (auto &i : adjList[s]) {
+            int next = i.first;
+            if (!visited[next]) {
+                dfsRec(visited, next, res);
+            }
+        }
+    }
+
+     vector<int> dfs(int src) {
+        vector<bool> visited(adjList.size(), false);
+        vector<int> res;
+        dfsRec(visited, src, res);
+        return res;
+    }
     
 };
 
@@ -87,10 +107,17 @@ int main(){
 
     g.printGraph();
 
-    vector<int> order = g.bfs(0);
+    vector<int> bsf_order = g.bfs(0);
     cout << "BFS starting from vertex 0:" << endl;
-    for (int v : order) cout << v << " ";
+    for (int v : bsf_order) cout << v << " ";
     cout << endl;
+
+    vector<int> dsf_order = g.dfs(0);
+    cout << "DFS starting from vertex 0:" << endl;
+    for (int v : dsf_order) cout << v << " ";
+    cout << endl;
+
+
 
 
 
