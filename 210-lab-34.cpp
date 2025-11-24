@@ -11,6 +11,30 @@ struct Edge {
 };
 
 typedef pair<int, int> Pair;  
+
+class DSU {
+    vector<int> parent, rank;
+public:
+    DSU(int n) {
+        parent.resize(n);
+        rank.resize(n);
+        for (int i = 0; i < n; i++) {
+            parent.at(i) = i;
+            rank.at(i) = 1;
+        }
+    }
+    int find(int i) {
+        return (parent.at(i) == i) ? i : (parent.at(i) = find(parent.at(i)));
+    }
+    void unite(int x, int y) {
+        int s1 = find(x), s2 = find(y);
+        if (s1 != s2) {
+            if (rank.at(s1) < rank.at(s2)) parent.at(s1) = s2;
+            else if (rank.at(s1) > rank.at(s2)) parent.at(s2) = s1;
+            else parent.at(s2) = s1, rank.at(s1)++;
+        }
+    }
+};
                               
 class Graph {
 public:
