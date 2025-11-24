@@ -179,6 +179,8 @@ public:
     
 };
 
+void menu();
+
 int main(){
     vector<Edge> edges = {
         {0, 1, 50},    // SF -> SJ
@@ -225,5 +227,18 @@ int main(){
 
 
     return 1;
+
+}
+
+void menu(){
+    cout << "West Coast Transportation Network Menu:" << endl;
+    cout << "[1] Display transportation network" << endl;
+    cout << "[2] Explore reachable cities (BFS)" << endl;
+    cout << "[3] Trace travel routes (DFS)" << endl;
+    cout << "[4] Calculate shortest paths (Dijkstra)" << endl;
+    cout << "[5] Find Minimum Spanning Tree (Kruskal)" << endl;
+    cout << "[0] Exit" << endl;
+    cout << "Enter your choice: ";
+
 
 }
