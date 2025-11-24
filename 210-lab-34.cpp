@@ -32,10 +32,9 @@ public:
         cout << "WEST COAST TRANSPORTATION:" << endl;
         cout << "=====================================" << endl;
         for (int i = 0; i < adjList.size(); i++) {
-            cout << "City " << i << " - " << cityNames.at(i) << " ---> ";
+            cout << "City " << i << " - " << cityNames.at(i) << ":" << endl;
             for (Pair v: adjList[i])
-                cout << "(" << v.first << ", " << v.second << ") ";
-            cout << endl;
+            cout << "   -> City " << i+1 << ": " << cityNames.at(v.first) << ", Distance: " << v.second << " miles" << endl;
         }
     }
 
@@ -109,7 +108,7 @@ int main(){
 
     Graph g(edges);
 
-    g.printGraph();
+    g.printGraph(cNames);
 
     vector<int> bsf_order = g.bfs(0);
     cout << "BFS starting from vertex 0:" << endl;
