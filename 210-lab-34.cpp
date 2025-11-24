@@ -28,10 +28,11 @@ public:
             adjList[dest].push_back(make_pair(src, weight));
         }
     }
-    void printGraph() {
-        cout << "Graph's adjacency list:" << endl;
+    void printGraph(const vector<string> cityNames) {
+        cout << "WEST COAST TRANSPORTATION:" << endl;
+        cout << "=====================================" << endl;
         for (int i = 0; i < adjList.size(); i++) {
-            cout << i << " ---> ";
+            cout << "City " << i << " - " << cityNames.at(i) << " ---> ";
             for (Pair v: adjList[i])
                 cout << "(" << v.first << ", " << v.second << ") ";
             cout << endl;
@@ -102,6 +103,9 @@ int main(){
         {5, 10, 420},  // LS -> SLC
         {10, 11, 520}  // SLC -> DEN
     };
+
+    vector<string> cNames= {    "San Francisco", "San Jose","Sacramento","Los Angeles","San Diego","Las Vegas","Phoenix", "Tucson",       
+    "Seattle","Portland","Salt Lake City","Denver"};
 
     Graph g(edges);
 
